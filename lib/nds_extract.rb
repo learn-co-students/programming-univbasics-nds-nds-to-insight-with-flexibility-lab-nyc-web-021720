@@ -1,6 +1,6 @@
 # Provided, don't edit
 require 'directors_database'
-
+require 'pry'
 # A method we're giving you. This "flattens"  Arrays of Arrays so: [[1,2],
 # [3,4,5], [6]] => [1,2,3,4,5,6].
 
@@ -33,19 +33,19 @@ end
 
 # Your code after this point
 
+
 def movies_with_director_key(name, movies_collection)
   
   
-hash = {}
+  pp movies_collection 
 
-directors_database[(movie_with_director_name(director_name, movie_data))] = movies_collection
-  
-  
-  
-  
-  
-  
-  
+  index = 0
+  while index < movies_collection.length do 
+     movies_collection[index][:director_name] = name
+    
+  index +=1 
+end 
+  movies_collection
   
   
   
@@ -75,6 +75,19 @@ end
 
 
 def gross_per_studio(collection)
+  
+  hash = {}
+  
+  index = 0  
+  while index < collection.length do 
+    # collection[index][:studio] =  worldwide_gross_numbers
+    key = coollection[index][:studio]
+    binding.pry
+    hash[key] = value 
+    index +=1 
+  end 
+  hash 
+  
   # GOAL: Given an Array of Hashes where each Hash represents a movie,
   # return a Hash that includes the total worldwide_gross of all the movies from
   # each studio.
@@ -89,6 +102,16 @@ def gross_per_studio(collection)
 end
 
 def movies_with_directors_set(source)
+  
+  #   index = 0 
+  #   while index < source[index].length do
+  #       source[index][:director_name] = movies  
+  #   index +=1 
+  # end 
+  
+  # source
+  
+  
   # GOAL: For each director, find their :movies Array and stick it in a new Array
   #
   # INPUT:
@@ -106,7 +129,7 @@ end
 # call code. You'll have to "see-saw" to get this to work!
 
 def studios_totals(nds)
-  a_o_a_movies_with_director_names = movies_with_directors_set(nds)
-  movies_with_director_names = flatten_a_o_a(a_o_a_movies_with_director_names)
-  return gross_per_studio(movies_with_director_names)
+  # a_o_a_movies_with_director_names = movies_with_directors_set(nds)
+  # movies_with_director_names = flatten_a_o_a(a_o_a_movies_with_director_names)
+  # return gross_per_studio(movies_with_director_names)
 end

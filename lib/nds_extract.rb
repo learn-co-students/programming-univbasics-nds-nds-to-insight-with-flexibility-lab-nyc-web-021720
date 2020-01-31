@@ -36,27 +36,17 @@ end
 
 def movies_with_director_key(name, movies_collection)
   
+  array = []
   
   pp movies_collection 
 
   index = 0
   while index < movies_collection.length do 
-     movies_collection[index][:director_name] = name
-    
+     movies_collection[index]
+   array<< movie_with_director_name(name,movies_collection[index])
   index +=1 
 end 
-  movies_collection
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  array
   # GOAL: For each Hash in an Array (movies_collection), provide a collection
   # of movies and a directors name to the movie_with_director_name method
   # and accumulate the returned Array of movies into a new Array that's
@@ -80,10 +70,13 @@ def gross_per_studio(collection)
   
   index = 0  
   while index < collection.length do 
-    # collection[index][:studio] =  worldwide_gross_numbers
-    key = coollection[index][:studio]
-    binding.pry
-    hash[key] = value 
+    key = collection[index][:studio]
+  
+    if !hash[key]
+      hash[key] = collection[index][:worldwide_gross]
+    else
+      hash[key] += collection[index][:worldwide_gross]
+   end 
     index +=1 
   end 
   hash 
@@ -103,23 +96,33 @@ end
 
 def movies_with_directors_set(source)
   
-  #   index = 0 
-  #   while index < source[index].length do
-  #       source[index][:director_name] = movies  
-  #   index +=1 
-  # end 
+new_array = []
+
+
+index=0 
+while index < source.length do 
+director_name = source[index][:name]
+director_movies = source[index][:movies]
+
+new_array<< movies_with_director_key(director_name, director_movies)
+index +=1
+end 
+
+new_array 
+
+
+
   
-  # source
   
   
   # GOAL: For each director, find their :movies Array and stick it in a new Array
-  #
+  
   # INPUT:
   # * source: An Array of Hashes containing director information including
   # :name and :movies
-  #
+  
   # RETURN:
-  #
+  
   # Array of Arrays containing all of a director's movies. Each movie will need
   # to have a :director_name key added to it.
 end
@@ -129,7 +132,7 @@ end
 # call code. You'll have to "see-saw" to get this to work!
 
 def studios_totals(nds)
-  # a_o_a_movies_with_director_names = movies_with_directors_set(nds)
-  # movies_with_director_names = flatten_a_o_a(a_o_a_movies_with_director_names)
-  # return gross_per_studio(movies_with_director_names)
+  a_o_a_movies_with_director_names = movies_with_directors_set(nds)
+  movies_with_director_names = flatten_a_o_a(a_o_a_movies_with_director_names)
+  return gross_per_studio(movies_with_director_names)
 end

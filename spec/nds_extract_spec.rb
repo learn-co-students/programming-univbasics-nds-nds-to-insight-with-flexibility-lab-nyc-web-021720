@@ -78,8 +78,8 @@ describe 'gross_per_studio' do
       { :title => "Movie C", :studio => "Omega Films", :worldwide_gross => 30 }
     ]
     result = gross_per_studio(test_data)
-    expect(result["Alpha Films"]).to eq(40), "We should collect the totals of films made by this Alpha Films"
-    expect(result["Omega Films"]).to eq(30), "We should collect the totals of films made by this Omega Films"
+    expect(result["Alpha Films"]).to eq(40)#, "We should collect the totals of films made by this Alpha Films"
+    expect(result["Omega Films"]).to eq(30)#, "We should collect the totals of films made by this Omega Films"
   end
 end
 

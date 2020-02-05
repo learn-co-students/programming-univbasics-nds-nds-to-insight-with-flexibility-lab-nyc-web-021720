@@ -21,7 +21,7 @@ def flatten_a_o_a(aoa)
 end
 
 def movie_with_director_name(director_name, movie_data)
-  { 
+  {
     :title => movie_data[:title],
     :worldwide_gross => movie_data[:worldwide_gross],
     :release_year => movie_data[:release_year],
@@ -48,6 +48,13 @@ def movies_with_director_key(name, movies_collection)
   # Array of Hashes where each Hash represents a movie; however, they should all have a
   # :director_name key. This addition can be done by using the provided
   # movie_with_director_name method
+  movies = []
+  x = 0
+  while x < movies_collection.length do
+    movies.append(movie_with_director_name(name, movies_collection[x]))
+    x += 1
+  end
+  return movies
 end
 
 
@@ -63,6 +70,17 @@ def gross_per_studio(collection)
   #
   # Hash whose keys are the studio names and whose values are the sum
   # total of all the worldwide_gross numbers for every movie in the input Hash
+  n_h = {}
+  x = 0
+  while x < collection.length do
+    if !n_h[collection[x][:studio]]
+      n_h[collection[x][:studio]] = collection[x][:worldwide_gross]
+    else
+      n_h[collection[x][:studio]] += collection[x][:worldwide_gross]
+    end
+    x += 1
+  end
+  return n_h
 end
 
 def movies_with_directors_set(source)
@@ -76,6 +94,13 @@ def movies_with_directors_set(source)
   #
   # Array of Arrays containing all of a director's movies. Each movie will need
   # to have a :director_name key added to it.
+  n_a = []
+  x = 0
+  while x < source.length do
+    n_a.append(movies_with_director_key(source[x][:name], source[x][:movies]))
+    x += 1
+  end
+  return n_a
 end
 
 # ----------------    End of Your Code Region --------------------

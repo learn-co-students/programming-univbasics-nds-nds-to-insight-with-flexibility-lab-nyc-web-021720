@@ -48,6 +48,18 @@ def movies_with_director_key(name, movies_collection)
   # Array of Hashes where each Hash represents a movie; however, they should all have a
   # :director_name key. This addition can be done by using the provided
   # movie_with_director_name method
+  
+  # we're going to individually sort thru the movie collection 
+  # and spit out a hash into the array {director name => movie}
+  
+  aoh = [] #array of hashes
+  current_movie = 0 
+    while current_movie < movies_collection.count do 
+      movie_info = movies_collection[current_movie]
+      aoh << movie_with_director_name(name, movie_info)
+      current_movie += 1 
+    end 
+  aoh
 end
 
 
@@ -63,6 +75,29 @@ def gross_per_studio(collection)
   #
   # Hash whose keys are the studio names and whose values are the sum
   # total of all the worldwide_gross numbers for every movie in the input Hash
+  
+  # i'm sure there's a better way to do this but i'm basically cross referencing a custom
+  # array that adds the studio to the array if it isn't found
+  list_of_studios = []
+  gross = {}
+  movie_index = 0 
+  # binding.pry
+    while movie_index < collection.count do 
+      if list_of_studios.include?(collection[movie_index][:studio])
+        studio_name = collection[movie_index][:studio]
+        total = gross[studio_name]
+        total += collection[movie_index][:worldwide_gross]
+        gross[studio_name] = total
+        movie_index += 1
+      else 
+        list_of_studios << collection[movie_index][:studio]
+        gross[collection[movie_index][:studio]] = collection[movie_index][:worldwide_gross]
+        movie_index += 1 
+      end
+    end   
+  
+  gross  
+  
 end
 
 def movies_with_directors_set(source)
@@ -76,6 +111,18 @@ def movies_with_directors_set(source)
   #
   # Array of Arrays containing all of a director's movies. Each movie will need
   # to have a :director_name key added to it.
+  # x = source 
+  # puts source
+  result_array = []
+  director_index = 0 
+    while director_index < source.count do
+      which_hash_in_array = source[director_index]
+      director_name = which_hash_in_array[:name]
+      dir_movies = which_hash_in_array[:movies]
+      result_array << movies_with_director_key(director_name, dir_movies)
+      director_index += 1 
+    end
+  result_array
 end
 
 # ----------------    End of Your Code Region --------------------

@@ -1,17 +1,16 @@
 # Provided, don't edit
 require 'directors_database'
-
 # A method we're giving you. This "flattens"  Arrays of Arrays so: [[1,2],
 # [3,4,5], [6]] => [1,2,3,4,5,6].
 
-def flatten_a_o_a(aoa)
+def flatten_a_o_a(num)
   result = []
   i = 0
 
-  while i < aoa.length do
+  while i < num.length do
     k = 0
-    while k < aoa[i].length do
-      result << aoa[i][k]
+    while k < num[i].length do
+      result << num[i][k]
       k += 1
     end
     i += 1
@@ -21,7 +20,7 @@ def flatten_a_o_a(aoa)
 end
 
 def movie_with_director_name(director_name, movie_data)
-  { 
+  {
     :title => movie_data[:title],
     :worldwide_gross => movie_data[:worldwide_gross],
     :release_year => movie_data[:release_year],
@@ -48,6 +47,16 @@ def movies_with_director_key(name, movies_collection)
   # Array of Hashes where each Hash represents a movie; however, they should all have a
   # :director_name key. This addition can be done by using the provided
   # movie_with_director_name method
+  result = []
+  index = 0
+
+  while index < movies_collection.length do
+    movie_data = movies_collection[index]
+    result << movie_with_director_name(name, movie_data)
+    index += 1
+  end
+
+  result
 end
 
 
@@ -63,7 +72,23 @@ def gross_per_studio(collection)
   #
   # Hash whose keys are the studio names and whose values are the sum
   # total of all the worldwide_gross numbers for every movie in the input Hash
+  result = {}
+  index = 0
+
+  while index < collection.length do
+    movie = collection[index]
+
+    if !result[movie[:studio]]
+      result[movie[:studio]] = movie[:worldwide_gross]
+    else
+      result[movie[:studio]] += movie[:worldwide_gross]
+    end
+    index += 1
+  end
+
+  result
 end
+
 
 def movies_with_directors_set(source)
   # GOAL: For each director, find their :movies Array and stick it in a new Array
@@ -76,6 +101,18 @@ def movies_with_directors_set(source)
   #
   # Array of Arrays containing all of a director's movies. Each movie will need
   # to have a :director_name key added to it.
+  index = 0
+  movies = []
+
+  while index < source.length do
+    dir_info_hash = source[index]
+    director_name = dir_info_hash[:name]
+    directors_movies = dir_info_hash[:movies]
+    movies << movies_with_director_key(director_name, directors_movies)
+    index += 1
+  end
+
+  return movies
 end
 
 # ----------------    End of Your Code Region --------------------
